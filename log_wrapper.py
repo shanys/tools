@@ -10,14 +10,15 @@ logger_list = {}
 cur_file_dir = os.path.split(os.path.realpath(__file__))[0]
 
 
-def get_logger(name='output'):
+def get_logger(name='output', log_path=None):
         if name in logger_list:
             return logger_list[name]
-        formatter = logging.Formatter("[%(asctime)s] (%(levelname)s) %(filename)s:%(lineno)3d:  %(message)s")
-        log_path = os.path.join(cur_file_dir, "../log")
+        formatter = logging.Formatter("[%(asctime)s] (%(levelname)s) %(filename)s: %(funcName)s %(lineno)d:  %(message)s")
+        log_path = os.path.join(cur_file_dir, "../log") if not log_path else log_path
         if not os.path.exists(log_path):
             os.makedirs(log_path)
-        log_filename = os.path.join(log_path, name, ".log")
+        name = name if name.endswith(".log") else name + ".log"
+        log_filename = os.path.join(log_path, name)
         if not os.path.exists(os.path.split(log_filename)[0]):
             os.mkdir(os.path.split(log_filename)[0])
         file_handler = logging.handlers.RotatingFileHandler(log_filename, maxBytes=10*1024*1024,backupCount=5)
