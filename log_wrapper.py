@@ -13,7 +13,7 @@ cur_file_dir = os.path.split(os.path.realpath(__file__))[0]
 def get_logger(name='output', log_path=None):
         if name in logger_list:
             return logger_list[name]
-        formatter = logging.Formatter("[%(asctime)s] (%(levelname)s) %(filename)s: %(funcName)s %(lineno)d:  %(message)s")
+        formatter = logging.Formatter("[%(asctime)s %(levelname)s %(filename)s:%(lineno)d] %(funcName)s:  %(message)s")
         log_path = os.path.join(cur_file_dir, "../log") if not log_path else log_path
         if not os.path.exists(log_path):
             os.makedirs(log_path)
